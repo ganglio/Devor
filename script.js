@@ -16,6 +16,12 @@ var vy = 0;
 // Acceleration
 var ax = 0;
 var ay = 0;
+var az = 0;
+
+// rotation
+var ra = 0;
+var rb = 0;
+var rg = 0;
 
 var delay = 10;
 var vMultiplier = 0.01;
@@ -23,15 +29,28 @@ var vMultiplier = 0.01;
 if (window.DeviceMotionEvent==undefined) {
 	document.getElementById("no").style.display="block";
 	document.getElementById("yes").style.display="none";
-
 } else {
 	window.ondevicemotion = function(event) {
 		ax = event.accelerationIncludingGravity.x;
 		ay = event.accelerationIncludingGravity.y;
+		az = event.accelerationIncludingGravity.z;
+	}
+	window.ondeviceorientation = function(event) {
+		ra = event.alpha;
+		rb = event.beta;
+		rg = event.gamma;
 	}
 
 	setInterval(function() {
-		document.getElementById("data").innerHTML="Ax: "+ax+" Ay: "+ay;
+		document.getElementById("data").innerHTML=
+			"Ax: "+Math.round(ax*100)/100+"<br/>"+
+			"Ay: "+Math.round(ay*100)/100+"<br/>"+
+			"Az: "+Math.round(az*100)/100+"<br/>"+
+			
+			"Ra: "+Math.round(ra*100)/100+"<br/>"+
+			"Rb: "+Math.round(rb*100)/100+"<br/>"+
+			"Rg: "+Math.round(rg*100)/100+"<br/>";//*/
+		
 		vy = vy + -(ay);
 		vx = vx + ax;
 
